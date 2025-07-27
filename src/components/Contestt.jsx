@@ -13,18 +13,20 @@ function Contest() {
     endDate: ''
   });
 
+
   // Fetch all problems once
-  useEffect(() => {
-    const fetchProblems = async () => {
-      try {
-        const { data } = await axiosClient.get('/problem/getAllProblem');
-        setProblems(data);
-      } catch (err) {
-        console.error('Failed to fetch problems', err);
-      }
-    };
-    fetchProblems();
-  }, []);
+useEffect(() => {
+  const fetchProblems = async () => {
+    try {
+      const { data } = await axiosClient.get('/problem/getAllProblem');
+      console.log("Fetched problem response:", data); // optional debug
+      setProblems(data.problems || []); // ✅ actual fix
+    } catch (err) {
+      console.error('Failed to fetch problems', err);
+    }
+  };
+  fetchProblems();
+}, []);
 
   // Toggle selection
   const handleProblemToggle = (id) => {
