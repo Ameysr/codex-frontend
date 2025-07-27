@@ -11,18 +11,20 @@ const AdminDelete = () => {
     fetchProblems();
   }, []);
 
-  const fetchProblems = async () => {
-    try {
-      setLoading(true);
-      const { data } = await axiosClient.get('/problem/getAllProblem');
-      setProblems(data);
-    } catch (err) {
-      setError('Failed to fetch problems');
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+const fetchProblems = async () => {
+  try {
+    setLoading(true);
+    const { data } = await axiosClient.get('/problem/getAllProblem');
+    console.log("Fetched problems:", data);
+    setProblems(data.problems || []); // Fix here
+  } catch (err) {
+    setError('Failed to fetch problems');
+    console.error(err);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this problem?')) return;
